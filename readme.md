@@ -3,3 +3,4 @@
 - 调试借口所用的服务通用框架，最终为了实现更便捷的web-api测试服务
 - static和templates中使用vue.js build的web页面
 - just a demo now.
+- 输入login 打开浏览器控制台查看。
