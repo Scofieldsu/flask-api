@@ -24,10 +24,18 @@ def index():
 def login():
     return  "success"
 
+@app.route('/logout',methods=['POST','GET'])
+@allow_cross_domain
+def logout():
+    return  "success"
+
 @app.route('/get_all_api',methods=['POST','GET'])
 @allow_cross_domain
 def get_all_api():
-    result = {'name': 'login()', 'description': '登录接口', 'params': {'loginname': 'str'}}
+    result ={'login':{'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str'}},
+             'get_all_api':{'name':'get_all_api','description':'获取所有接口信息','params':{}},
+             'login':{'name':'login','description': '退出','params': {}},
+            'allKey':['login','get_all_api','logout']} 
     return  jsonify(result)
 
 if __name__ == '__main__':
