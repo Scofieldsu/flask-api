@@ -1,5 +1,5 @@
 # encoding: utf-8
-from flask import Flask, render_template, redirect,make_response
+from flask import Flask, render_template, redirect,make_response,jsonify
 from functools import wraps
 
 app = Flask(__name__)
@@ -22,7 +22,13 @@ def index():
 @app.route('/login',methods=['POST','GET'])
 @allow_cross_domain
 def login():
-	return  "success"
+    return  "success"
+
+@app.route('/get_all_api',methods=['POST','GET'])
+@allow_cross_domain
+def get_all_api():
+    result = {'name': 'login()', 'description': '登录接口', 'params': {'loginname': 'str'}}
+    return  jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)
