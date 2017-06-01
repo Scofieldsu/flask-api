@@ -34,7 +34,7 @@ def logout():
 def get_all_api():
     result ={'login':{'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str'}},
              'get_all_api':{'name':'get_all_api','description':'获取所有接口信息','params':{}},
-             'login':{'name':'login','description': '退出','params': {}},
+             'logout':{'name':'logout','description': '退出','params': {}},
             'allKey':['login','get_all_api','logout']} 
     return  jsonify(result)
 
