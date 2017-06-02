@@ -26,13 +26,13 @@ def index():
 @app.route('/login', methods=['POST', 'GET'])
 @allow_cross_domain
 def login():
-    return "success"
+    return "login success"
 
 
 @app.route('/logout', methods=['POST', 'GET'])
 @allow_cross_domain
 def logout():
-    return "success"
+    return "logout success"
 
 
 @app.route('/get_all_api', methods=['POST', 'GET'])
