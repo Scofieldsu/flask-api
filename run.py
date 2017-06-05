@@ -18,7 +18,7 @@ def allow_cross_domain(fun):
     return wrapper_fun
 
 
-@app.route('/')
+@app.route('/test')
 def index():
     return render_template('index.html')
 
@@ -38,9 +38,9 @@ def logout():
 @app.route('/get_all_api', methods=['POST', 'GET'])
 @allow_cross_domain
 def get_all_api():
-    result = {'login': {'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str'}},
-              'get_all_api': {'name': 'get_all_api', 'description': '获取所有接口信息', 'params': {}},
-              'logout': {'name': 'logout', 'description': '退出', 'params': {}},
+    result = {'login': {'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str',"password":"str"}},
+              'get_all_api': {'name': 'get_all_api', 'description': '获取所有接口信息', 'params': {"id":"int"}},
+              'logout': {'name': 'logout', 'description': '退出', 'params': {"name":"str","pwd":"str"}},
               'allKey': ['login', 'get_all_api', 'logout']}
     return jsonify(result)
 
