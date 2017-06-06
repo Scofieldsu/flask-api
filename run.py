@@ -18,7 +18,7 @@ def allow_cross_domain(fun):
     return wrapper_fun
 
 
-@app.route('/test')
+@app.route('/')
 def index():
     return render_template('index.html')
 
