@@ -1,5 +1,5 @@
 # encoding: utf-8
-from flask import Flask, render_template, redirect, make_response, jsonify
+from flask import Flask, render_template, redirect, make_response, jsonify,json
 from functools import wraps
 
 app = Flask(__name__)
