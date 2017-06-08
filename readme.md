@@ -2,7 +2,7 @@
 - python run.py
 
 - - -
-### 待解决部分
+### 待解决部分（2017-06-05）
 
 - 前端数据处理：
 
@@ -16,3 +16,20 @@
   - 目标：不依赖于服务器使用的特定web框架，可移植，尽可能多的适配。
 
 
+### updata（2017-06-08）
+
+- 已解决：
+
+  - 使用axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'解决content-type为json的问题
+
+  - 使用jsonrpc格式，响应数据从res.data.result获取
+
+  - 后台使用flask-cors解决跨域请求问题
+
+  - 使用json-rpc的实现统一接口路由，且不依赖于flask。
+
+- 待解决：
+
+  - jsonrpc请求数据id生成方法
+
+  - 装饰器需重写，加入参数类型
