@@ -1,8 +1,21 @@
 # encoding: utf-8
 from flask import Flask, render_template, redirect, make_response, jsonify,json
 from functools import wraps
+from jsonrpc.backend.flask import api
+from flask_cors import *
 
 app = Flask(__name__)
+app.register_blueprint(api.as_blueprint())
+# app.add_url_rule('/', 'api', api.as_view())
+
+# 支持跨域请求
+CORS(app, supports_credentials=True)
+
+
+
+@api.dispatcher.add_method
+def my_method(*args, **kwargs):
+    return 'hello'
 
 
 def allow_cross_domain(fun):
@@ -19,30 +32,30 @@ def allow_cross_domain(fun):
 
 
 @app.route('/')
-def index():
+def index(*args, **kwargs):
     return render_template('index.html')
 
 
-@app.route('/login', methods=['POST', 'GET'])
-@allow_cross_domain
-def login():
+@api.dispatcher.add_method
+def login(*args, **kwargs):
     return "login success"
 
 
-@app.route('/logout', methods=['POST', 'GET'])
-@allow_cross_domain
-def logout():
+@api.dispatcher.add_method
+def logout(*args, **kwargs):
     return "logout success"
 
 
-@app.route('/get_all_api', methods=['POST', 'GET'])
-@allow_cross_domain
-def get_all_api():
-    result = {'login': {'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str',"password":"str"}},
-              'get_all_api': {'name': 'get_all_api', 'description': '获取所有接口信息', 'params': {"id":"int"}},
-              'logout': {'name': 'logout', 'description': '退出', 'params': {"name":"str","pwd":"str"}},
+@api.dispatcher.add_method
+# @app.route('/get_all_api', methods=['POST', 'GET'])
+# @allow_cross_domain
+def get_all_api(*args, **kwargs):
+    result = {'login': {'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str', "password": "str"}},
+              'get_all_api': {'name': 'get_all_api', 'description': '获取所有接口信息', 'params': {"id": "int"}},
+              'logout': {'name': 'logout', 'description': '退出', 'params': {"name": "str", "pwd": "str"}},
               'allKey': ['login', 'get_all_api', 'logout']}
-    return jsonify(result)
+    # return jsonify(result)
+    return result
 
 
 if __name__ == '__main__':
