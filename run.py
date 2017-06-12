@@ -1,5 +1,5 @@
 # encoding: utf-8
-from flask import Flask, render_template, redirect, make_response, jsonify,json
+from flask import Flask, render_template, redirect, make_response, jsonify, json
 from functools import wraps
 from jsonrpc.backend.flask import api
 from flask_cors import *
@@ -11,10 +11,13 @@ CORS(app, supports_credentials=True)
 
 
 @api.dispatcher.add_method
-def my_method(*args, **kwargs):
+def my_method(param1, param2, param3):
     """
-    description=test;
-    name=str
+    :description  测试接口
+    :param param1: dict
+    :param param2: int
+    :param param3: str
+    :return: code or message
     """
     return 'hello'
 
@@ -38,55 +41,78 @@ def index(*args, **kwargs):
 
 
 @api.dispatcher.add_method
-def login(*args, **kwargs):
+def login(name, pwd):
     """
-    description=登录接口;
-    name=str;
-    pwd=str;
+    :description 登录接口
+    :param name: str
+    :param pwd: str
+    :return: 登录信息
     """
-    result = {"msg":"login success","code":200}
+    result = {"msg": "login success", "code": 200}
     return result
 
 
 @api.dispatcher.add_method
-def logout(*args, **kwargs):
+def logout(name):
     """
-    description=退出接口;
-    mydict=dict;
+    :description 退出接口
+    :param name: str
+    :return: 退出信息success or error
     """
     return "logout success"
 
 
-def  trans_str_to_dict(dostr):
+def trans_str_to_dict(dostr):
     result = {}
     if not dostr:
         return result
-    temlist=dostr.replace('\n','').split(';')
-    for param in temlist:
-        if param.strip():
-            tem = param.split('=')
-            result[tem[0].strip()] = tem[1].strip()
+    temlist = dostr.split('\n')
+    for x in temlist:
+        if ":description" in x:
+            result["description"] = x.split(":description")[1]
+        elif ":param" in x:
+            params = x.split(":param")[1]
+            if params.strip():
+                tem = params.split(':')
+                if len(tem) >= 2:
+                    result[tem[0].strip()] = tem[1].strip()
+        elif ":return:" in x:
+            result["return"] = x.split(":return:")[1]
     return result
 
-def compose_api_info(key,apidict):
-    temres={}
-    temres["name"]=key
+
+def dict_move_key(dict_a, dict_b, key):
+    if key in dict_b:
+        dict_a[key] = dict_b[key]
+        dict_b.pop(key)
+    return dict_a
+
+
+def compose_api_info(key, apidict):
+    temres = {}
+    temres["name"] = key
     docdict = trans_str_to_dict(apidict[key].__doc__)
-    if "description" in docdict:
-        temres["description"]=docdict["description"]
-        docdict.pop("description")
-    temres["params"]=docdict
+    temres = dict_move_key(temres, docdict, "description")
+    temres = dict_move_key(temres, docdict, "return")
+    temres["params"] = docdict
     return temres
+
 
 @api.dispatcher.add_method
 def get_all_api(*args, **kwargs):
+    """
+    :description 获取接口信息
+    :param args:str
+    :param kwargs:str
+    :return: 所有接口信息
+    """
     apidict = api.dispatcher.method_map
     api_name_list = apidict.keys()
-    result={}
+    result = {}
     for i in api_name_list:
-        item={}
-        item=compose_api_info(i,apidict)
-        result[i]=item
+        item = {}
+        item = compose_api_info(i, apidict)
+        result[i] = item
     return result
 
 
