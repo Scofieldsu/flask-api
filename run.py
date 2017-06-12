@@ -113,16 +113,16 @@ def get_all_api(*args, **kwargs):
         item = {}
         item = compose_api_info(i, apidict)
         result[i] = item
+    result.pop("get_all_api")
     return result
 
 
-@api.dispatcher.add_method
+
 # @app.route('/get_all_api', methods=['POST', 'GET'])
 # @allow_cross_domain
 def get_all_api_temp(*args, **kwargs):
-    result = {'login': {'name': 'login', 'description': '登录接口', 'params': {'loginname': 'str', "password": "str"}},
-              'get_all_api': {'name': 'get_all_api', 'description': '获取所有接口信息', 'params': {"id": "int"}},
-              'logout': {'name': 'logout', 'description': '退出', 'params': {"name": "str", "pwd": "str"}}}
+    result = {'login': {'name': 'login', 'description': '登录接口', 'return': '返回信息', 'params': {'loginname': 'str', "password": "str"}},
+              'logout': {'name': 'logout', 'description': '退出', 'return': '返回信息',  'params': {"name": "str", "pwd": "str"}}}
     # return jsonify(result)
     return result
 
