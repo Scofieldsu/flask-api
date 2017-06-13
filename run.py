@@ -11,15 +11,28 @@ CORS(app, supports_credentials=True)
 
 
 @api.dispatcher.add_method
-def my_method(param1, param2, param3):
+def my_method(param_dict, param_int, param_str, param_list):
     """
     :description  测试接口
-    :param param1: dict
-    :param param2: int
-    :param param3: str
+    :param param_dict: dict
+    :param param_int: int
+    :param param_str: str
+    :param param_list: list
     :return: code or message
     """
-    return 'hello'
+
+    data1 = json.loads(param_dict)
+    data2 = param_int
+    data3 = param_str
+    data4 = param_list
+    result = {
+        "param_dict": data1,
+        "param_int": data2,
+        "param_str": data3,
+        "param_list": data4
+    }
+    return result
+
 
 
 def allow_cross_domain(fun):
@@ -37,6 +50,12 @@ def allow_cross_domain(fun):
 
 @app.route('/')
 def index(*args, **kwargs):
+    """
+
+    :param args:
+    :param kwargs:
+    :return:
+    """
     return render_template('index.html')
 
 
@@ -128,4 +147,4 @@ def get_all_api_temp(*args, **kwargs):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
