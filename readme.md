@@ -6,7 +6,7 @@
 
 - 前端数据处理：
 
-  - 发送请求时auth，header，body数据未发送 ~~(get-api功能优先)~~
+  - 发送请求时auth，header，~~body~~数据未发送 ~~(get-api功能优先)~~
   - ~~axios插件默认请求的content-type：application/x-www-form-urlencoded，改为application/json是请求失败，请求methods变为option；xmlhttprequest can not 。。。目前是把请求数据JSON.stringify（）解析为字符串。~~
   - ~~请求的响应数据为对象时在response组件中显示异常~~
 
