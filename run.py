@@ -65,6 +65,7 @@ def logout(name):
     """
     return "logout success"
 
+
 # 把function的__doc__字符串转换为字典
 def trans_str_to_dict(do_str):
     result = {}
@@ -84,12 +85,14 @@ def trans_str_to_dict(do_str):
             result["return"] = x.split(":return:")[1]
     return result
 
+
 # 字典b是字典a的一个value，把字典b中的一个键值对移动到字典a
 def dict_move_key(dict_a, dict_b, key):
     if key in dict_b:
         dict_a[key] = dict_b[key]
         dict_b.pop(key)
     return dict_a
+
 
 # 重组接口信息为get_all_api_tem中的数据格式
 def compose_api_info(key, api_dict):
