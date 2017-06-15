@@ -6,7 +6,6 @@ from flask_cors import *
 
 app = Flask(__name__)
 app.register_blueprint(api.as_blueprint())
-# app.add_url_rule('/', 'api', api.as_view())
 CORS(app, supports_credentials=True)
 
 
@@ -32,20 +31,6 @@ def my_method(param_dict, param_int, param_str, param_list):
         "param_list": data4
     }
     return result
-
-
-
-def allow_cross_domain(fun):
-    @wraps(fun)
-    def wrapper_fun(*args, **kwargs):
-        rst = make_response(fun(*args, **kwargs))
-        rst.headers['Access-Control-Allow-Origin'] = '*'
-        rst.headers['Access-Control-Allow-Methods'] = 'PUT,GET,POST,DELETE'
-        allow_headers = "Referer,Accept,Origin,User-Agent"
-        rst.headers['Access-Control-Allow-Headers'] = allow_headers
-        return rst
-
-    return wrapper_fun
 
 
 @app.route('/')
@@ -80,13 +65,13 @@ def logout(name):
     """
     return "logout success"
 
-
-def trans_str_to_dict(dostr):
+# 把function的__doc__字符串转换为字典
+def trans_str_to_dict(do_str):
     result = {}
-    if not dostr:
+    if not do_str:
         return result
-    temlist = dostr.split('\n')
-    for x in temlist:
+    tem_list = dostr.split('\n')
+    for x in tem_list:
         if ":description" in x:
             result["description"] = x.split(":description")[1]
         elif ":param" in x:
@@ -99,21 +84,21 @@ def trans_str_to_dict(dostr):
             result["return"] = x.split(":return:")[1]
     return result
 
-
+# 字典b是字典a的一个value，把字典b中的一个键值对移动到字典a
 def dict_move_key(dict_a, dict_b, key):
     if key in dict_b:
         dict_a[key] = dict_b[key]
         dict_b.pop(key)
     return dict_a
 
-
-def compose_api_info(key, apidict):
-    temres = {}
-    temres["name"] = key
-    docdict = trans_str_to_dict(apidict[key].__doc__)
-    temres = dict_move_key(temres, docdict, "description")
-    temres = dict_move_key(temres, docdict, "return")
-    temres["params"] = docdict
+# 重组接口信息为get_all_api_tem中的数据格式
+def compose_api_info(key, api_dict):
+    tem_res = {}
+    tem_res["name"] = key
+    doc_dict = trans_str_to_dict(api_dict[key].__doc__)
+    tem_res = dict_move_key(tem_res, docdict, "description")
+    tem_res = dict_move_key(tem_res, docdict, "return")
+    tem_res["params"] = doc_dict
     return temres
 
 
@@ -125,24 +110,22 @@ def get_all_api(*args, **kwargs):
     :param kwargs:str
     :return: 所有接口信息
     """
-    apidict = api.dispatcher.method_map
-    api_name_list = apidict.keys()
+    # 从method_map获取所有接口方法，重组数格式
+    api_dict = api.dispatcher.method_map
+    api_name_list = api_dict.keys()
     result = {}
     for i in api_name_list:
         item = {}
-        item = compose_api_info(i, apidict)
+        item = compose_api_info(i, api_dict)
         result[i] = item
     result.pop("get_all_api")
     return result
 
 
-
-# @app.route('/get_all_api', methods=['POST', 'GET'])
-# @allow_cross_domain
+# get_all_api返回的数据格式
 def get_all_api_temp(*args, **kwargs):
-    result = {'login': {'name': 'login', 'description': '登录接口', 'return': '返回信息', 'params': {'loginname': 'str', "password": "str"}},
+    result = {'login': {'name': 'login', 'description': '登录接口', 'return': '返回信息', 'params': {'login_name': 'str', "password": "str"}},
               'logout': {'name': 'logout', 'description': '退出', 'return': '返回信息',  'params': {"name": "str", "pwd": "str"}}}
-    # return jsonify(result)
     return result
 
 
