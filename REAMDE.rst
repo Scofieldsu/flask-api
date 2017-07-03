@@ -1,8 +1,6 @@
-从demo_backend中抽出flaskapi整合为可安装的库。配合其前端apitest页面，为测试提供接口名称和参数。
+从demo_backend中分离出flaskapi整合为可安装包。配合其前端apitest页面，为测试提供接口名称和参数。
 
  - - -
- - 运行后，localhost:5000/api_test/ 为api测试页面
-
 
  - 安装：依赖于json-rpc,Flask-Cors。安装后，在app实例中，
    ```python
