@@ -1,2 +1,6 @@
-*.pyc
+*.py[c|o]
 .idea/
+.cache/
+__pycache__
+.DS_Store
+env
