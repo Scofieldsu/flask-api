@@ -8,12 +8,12 @@ flask-api
 
 .. code-block:: python
 
-    app.register_blueprint(api.as_blueprint())
+    app.register_blueprint(api.as_blueprint('/api'))
     CORS(app, supports_credentials=True)
 
 
 
-   例如在demo.py中需要写接口
+   安装flaskapi以后，在demo.py中需要写接口
 .. code-block:: python
 
      from flaskapi.api import api_add
@@ -25,15 +25,17 @@ flask-api
 
 .. code-block:: python
 
-    @api.dispatcher.add_method
-    def my_method(param_dict, param_int, param_str, param_list):
+    @api_add
+    def test_api(my_dict, my_int, my_str, my_list, my_datetime):
     """
     :description  测试接口
-    :param param_dict: dict
-    :param param_int: int
-    :param param_str: str
-    :param param_list: list
+    :param my_dict: dict:字典参数
+    :param my_int: int:整型
+    :param my_str: str:无默认值
+    :param my_list: list:可以省略[]
+    :param my_datetime: datetime :时间戳
     :return: code or message
     """
-    return result
+       return result
+
  
