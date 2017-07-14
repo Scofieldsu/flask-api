@@ -33,6 +33,7 @@
 
  ``` python
 
+@api_add
 def test_api(my_dict, my_int, my_str, my_list, my_datetime):
     """
     :description  测试接口
