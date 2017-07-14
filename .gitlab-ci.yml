@@ -30,6 +30,6 @@ build:
 test:
   stage: test
   script:
-    - docker run $DC_REGISTRY/library/$CI_PROJECT_NAME:$BUILD_TAG pytest  tests/
+    - docker run $DC_REGISTRY/library/$CI_PROJECT_NAME:$BUILD_TAG pytest  flaskapi/tests/
   tags:
     - docker
