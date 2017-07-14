@@ -7,7 +7,7 @@
 ---
     flaskapi根据API-DATA的规范将接口注释转换为格式化的数据返回给api-test服务。
 
-    加入json-roc更方便接口的实现。
+    加入json-rpc更方便接口的实现。
 
 - 实践步骤:
 
