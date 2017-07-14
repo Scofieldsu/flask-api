@@ -21,15 +21,15 @@ setup(
     name="flask-api",
     version=version,
     packages=find_packages(),
-    test_suite="nose.collector",
-    tests_require=["nose", "mock"],
+    test_suite="tests",
+    tests_require=["pytest"],
 
     # metadata for upload to PyPI
     author="Yu Yuan",
     author_email="yuyuan_v@163.com",
     url="https://github.com/Scofieldsu/flask-api",
     description="flask jsonrpc api test",
-    long_description=read('README.rst'),
+    long_description=read('README.md'),
 
     #requirements
     install_requires = [
