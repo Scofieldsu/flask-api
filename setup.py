@@ -29,7 +29,7 @@ setup(
     author_email="yuyuan_v@163.com",
     url="https://github.com/Scofieldsu/flask-api",
     description="flask jsonrpc api test",
-    long_description=read('README.md'),
+    long_description=read('readme.md'),
 
     #requirements
     install_requires = [
